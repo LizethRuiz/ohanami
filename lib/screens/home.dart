@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ohanami/components/backgroud.dart';
 import 'package:ohanami/components/button_start.dart';
 import 'package:ohanami/screens/add_players.dart';
+import 'package:ohanami/screens/scores.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);

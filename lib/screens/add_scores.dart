@@ -3,15 +3,25 @@ import 'package:ohanami/components/backgroud.dart';
 import 'package:ohanami/components/button.dart';
 import 'package:ohanami/components/button_start.dart';
 import 'package:ohanami/components/rounded_input_field.dart';
+import 'package:ohanami/paquete_partida/jugador.dart';
 
 class AddScoreScreen extends StatefulWidget {
-  const AddScoreScreen({Key? key}) : super(key: key);
+  final List<Jugador> jugadores;
+  const AddScoreScreen({Key? key, required this.jugadores}) : super(key: key);
 
   @override
-  _AddScoreState createState() => _AddScoreState();
+  _AddScoreState createState() => _AddScoreState(this.jugadores);
 }
 
 class _AddScoreState extends State<AddScoreScreen> {
+  final List<Jugador> jugadores;
+  List<Widget> _children = [];
+
+  _AddScoreState(this.jugadores);
+
+  @override
+  void recorre() {}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

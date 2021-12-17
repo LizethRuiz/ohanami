@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:generic_bloc_provider/generic_bloc_provider.dart';
 import 'package:ohanami/screens/home.dart';
+import 'package:ohanami/screens/scores.dart';
 
-import 'blocs/bloc_partida.dart';
+import 'blocs/partida_bloc.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,11 +13,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-        child: const MaterialApp(
-          title: 'Ohanami',
-          home: MyHomePage(),
-        ),
-        bloc: PartidaBloc());
+    return MaterialApp(
+      title: 'Ohanami',
+      home: MyHomePage(),
+    );
   }
 }
