@@ -16,6 +16,7 @@ class _Score1Screen extends State<Score1Screen> {
   late List<PRonda1> puntuacionesRonda1 = [];
   String prueba = '';
   int sum = 1;
+  List<int> suma = [];
   List<Widget> _children = [];
 
   _Score1Screen(this.jugadores);
@@ -171,9 +172,9 @@ class ScoreJugador extends StatefulWidget {
   final int number;
   final String title;
   final VoidCallback press;
-  final int label;
+  late int label;
 
-  const ScoreJugador(
+  ScoreJugador(
       {Key? key,
       required this.number,
       required this.title,
@@ -190,7 +191,7 @@ class _ScoreJugadorState extends State<ScoreJugador> {
   final int number;
   final String title;
   final VoidCallback press;
-  final int label;
+  late int label;
 
   _ScoreJugadorState(this.number, this.title, this.press, this.label);
 
@@ -229,7 +230,12 @@ class _ScoreJugadorState extends State<ScoreJugador> {
           ),
           Spacer(),
           FloatingActionButton.extended(
-              onPressed: press,
+              onPressed: () => {
+                    setState(() {
+                      label = label + 1;
+                      press();
+                    }),
+                  },
               backgroundColor: Colors.green,
               //child: const Icon(Icons.navigation),
               //mini: true,
