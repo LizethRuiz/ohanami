@@ -1,6 +1,6 @@
-import 'package:ohanami/paquete_partida/helpers.dart';
 import 'package:ohanami/paquete_partida/problemas.dart';
 
+import 'helpers.dart';
 import 'jugador.dart';
 import 'puntuacion_jugador.dart';
 import 'puntuaciones.dart';
@@ -48,9 +48,9 @@ class Partida {
   }
 
   final Set<Jugador> jugadores;
-  List<PRonda1> _puntuacionesRonda1 = [];
-  List<PRonda2> _puntuacionesRonda2 = [];
-  List<PRonda3> _puntuacionesRonda3 = [];
+  List<CartasAPuntuarRonda1> _puntuacionesRonda1 = [];
+  List<CartasAPuntuarRonda2> _puntuacionesRonda2 = [];
+  List<CartasAPuntuarRonda3> _puntuacionesRonda3 = [];
 
   List<PuntuacionJugador> puntuaciones(FasePuntuacion ronda) {
     List<PuntuacionJugador> _puntuacionesJugador = [];
@@ -116,7 +116,7 @@ class Partida {
   ///
   ///En caso de que los jugadores de la puntuacions no coincidan con los
   ///del juego tira [ProblemaJugadoresNoConcuerdan]
-  void puntuacionRonda1(List<PRonda1> puntuaciones) {
+  void puntuacionRonda1(List<CartasAPuntuarRonda1> puntuaciones) {
     Set<Jugador> jugadoresR1 = puntuaciones.map((e) => e.jugador).toSet();
     if (!setEquals(jugadores, jugadoresR1))
       throw ProblemaJugadoresNoConcuerdan();
@@ -130,21 +130,21 @@ class Partida {
   ///se tira un [ProblemaJugadoresNoConcuerdan]
   ///Si se llama antes de puntuacionRonda1 se manda una excepción
   ///Si los números de las cartas no son los adecuados se pueden tirar otras excepciones
-  void puntuacionRonda2(List<PRonda2> puntuaciones) {
+  void puntuacionRonda2(List<CartasAPuntuarRonda2> puntuaciones) {
     if (_puntuacionesRonda1.isEmpty) throw ProblemaOrdenIncorrecto();
 
     Set<Jugador> jugadoresR2 = puntuaciones.map((e) => e.jugador).toSet();
     if (!setEquals(jugadores, jugadoresR2))
       throw ProblemaJugadoresNoConcuerdan();
 
-    for (PRonda2 segundaPuntuacion in puntuaciones) {
-      PRonda1 primeraPuntuacion = _puntuacionesRonda1.firstWhere(
+    for (CartasAPuntuarRonda2 segundaPuntuacion in puntuaciones) {
+      CartasAPuntuarRonda1 primeraPuntuacion = _puntuacionesRonda1.firstWhere(
           (element) => element.jugador == segundaPuntuacion.jugador);
       if (primeraPuntuacion.cuantasAzules > segundaPuntuacion.cuantasAzules) {
         throw ProblemaDisminucionAzules();
       }
 
-      for (PRonda2 p in puntuaciones) {
+      for (CartasAPuntuarRonda2 p in puntuaciones) {
         if (p.cuantasAzules > maximoCartasJugadasRonda2)
           throw ProblemasDemasiadasAzules();
         if (p.cuantasVerdes > maximoCartasJugadasRonda2)
@@ -167,7 +167,7 @@ class Partida {
     _puntuacionesRonda2 = puntuaciones;
   }
 
-  void puntuacionRonda3(List<PRonda3> puntuaciones) {
+  void puntuacionRonda3(List<CartasAPuntuarRonda3> puntuaciones) {
     if (_puntuacionesRonda2.isEmpty) throw ProblemaOrdenIncorrecto();
 
     Set<Jugador> jugadoresR3 = puntuaciones.map((e) => e.jugador).toSet();

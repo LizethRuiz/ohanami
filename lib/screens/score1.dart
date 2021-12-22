@@ -1,7 +1,10 @@
+import 'package:ohanami/components/button_start.dart';
 import 'package:ohanami/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:ohanami/paquete_partida/jugador.dart';
 import 'package:ohanami/paquete_partida/puntuaciones.dart';
+import 'package:ohanami/screens/score.dart';
+import 'package:ohanami/screens/score2.dart';
 
 class Score1Screen extends StatefulWidget {
   final List<Jugador> jugadores;
@@ -13,39 +16,41 @@ class Score1Screen extends StatefulWidget {
 
 class _Score1Screen extends State<Score1Screen> {
   final List<Jugador> jugadores;
-  late List<PRonda1> puntuacionesRonda1 = [];
+  late List<CartasAPuntuarRonda1> puntuacionesRonda1 = [];
+
   String prueba = '';
-  int sum = 1;
-  List<int> suma = [];
+  List<int> suma = [0, 0, 0, 0];
   List<Widget> _children = [];
 
   _Score1Screen(this.jugadores);
 
-  void recorre() {
+  void recordPlayers() {
     _children = [];
 
     for (var i = 0; i < jugadores.length; i++) {
-      puntuacionesRonda1.add(PRonda1(
-          jugador: Jugador(nombre: jugadores[i].nombre), cuantasAzules: 0));
-      print(jugadores[i].nombre);
       _children.add(ScoreJugador(
           number: i + 1,
           title: jugadores[i].nombre,
           press: () => {
                 setState(() {
                   prueba = jugadores[i].nombre;
-                  sum = sum + 1;
+                  suma[i] = suma[i] + 1;
                 }),
                 print("prueba es $prueba"),
-                print("suma ahora es $sum")
+                print("suma ahora es " + suma[i].toString())
               },
-          label: sum));
+          restart: () => {
+                setState(() {
+                  suma[i] = 0;
+                }),
+              },
+          label: suma[i]));
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    recorre();
+    recordPlayers();
     return Scaffold(
       body: Container(
         width: double.infinity,
@@ -101,58 +106,68 @@ class _Score1Screen extends State<Score1Screen> {
                   borderRadius: BorderRadius.circular(50),
                   color: Colors.white,
                 ),
-                child: Stack(
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(30),
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: _children),
-                    ),
-                    Positioned(
-                      right: 0,
-                      left: 0,
-                      bottom: 0,
-                      child: Container(
-                        padding: EdgeInsets.all(20),
-                        height: 100,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(40),
-                          boxShadow: [
-                            BoxShadow(
-                              offset: Offset(0, 4),
-                              blurRadius: 50,
-                              color: kTextColor.withOpacity(.1),
-                            ),
-                          ],
-                        ),
-                        child: Row(
-                          children: <Widget>[
-                            Expanded(
-                              child: Container(
-                                alignment: Alignment.center,
-                                height: 30,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(40),
-                                  color: kBlueColor,
-                                ),
-                                child: Text(
-                                  "Siguiente",
-                                  style: kSubtitleTextSyule.copyWith(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                child: Stack(children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(30),
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: _children),
+                  ),
+                  Positioned(
+                    right: 0,
+                    left: 0,
+                    bottom: 0,
+                    child: Container(
+                      padding: EdgeInsets.all(20),
+                      height: 100,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(40),
+                        boxShadow: [
+                          BoxShadow(
+                            offset: Offset(0, 4),
+                            blurRadius: 50,
+                            color: kTextColor.withOpacity(.1),
+                          ),
+                        ],
+                      ),
+                      child: Row(
+                        children: <Widget>[
+                          ElevatedButton(
+                            onPressed: () => {
+                              for (int i = 0; i < jugadores.length; i++)
+                                {
+                                  print(jugadores[i].nombre),
+                                  puntuacionesRonda1.add(CartasAPuntuarRonda1(
+                                      jugador: jugadores[i],
+                                      cuantasAzules: suma[i]))
+                                },
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return Score2Screen(
+                                      jugadores: jugadores,
+                                      puntuacionesRonda1: puntuacionesRonda1,
+                                    );
+                                  },
                                 ),
                               ),
-                            )
-                          ],
-                        ),
+                            },
+                            child: const Text("Siguiente"),
+                            style: ElevatedButton.styleFrom(
+                                primary: const Color(0xFF6E8AFA),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(18.0),
+                                ),
+                                fixedSize: const Size(360, 40)),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ]),
               ),
             ),
           ],
@@ -172,6 +187,7 @@ class ScoreJugador extends StatefulWidget {
   final int number;
   final String title;
   final VoidCallback press;
+  final VoidCallback restart;
   late int label;
 
   ScoreJugador(
@@ -179,21 +195,24 @@ class ScoreJugador extends StatefulWidget {
       required this.number,
       required this.title,
       required this.press,
+      required this.restart,
       required this.label})
       : super(key: key);
 
   @override
   _ScoreJugadorState createState() =>
-      _ScoreJugadorState(number, title, press, label);
+      _ScoreJugadorState(number, title, press, restart, label);
 }
 
 class _ScoreJugadorState extends State<ScoreJugador> {
   final int number;
   final String title;
   final VoidCallback press;
+  final VoidCallback restart;
   late int label;
 
-  _ScoreJugadorState(this.number, this.title, this.press, this.label);
+  _ScoreJugadorState(
+      this.number, this.title, this.press, this.restart, this.label);
 
   @override
   Widget build(BuildContext context) {
@@ -229,17 +248,31 @@ class _ScoreJugadorState extends State<ScoreJugador> {
             ),
           ),
           Spacer(),
-          FloatingActionButton.extended(
-              onPressed: () => {
-                    setState(() {
-                      label = label + 1;
-                      press();
-                    }),
-                  },
-              backgroundColor: Colors.green,
-              //child: const Icon(Icons.navigation),
-              //mini: true,
-              label: Text(label.toString())),
+          ElevatedButton(
+            onPressed: () => {
+              setState(() {
+                label = label + 1;
+                press();
+              }),
+            },
+            child: Text(label.toString()),
+            style: ElevatedButton.styleFrom(
+                shape: const CircleBorder(), fixedSize: Size(40, 40)),
+          ),
+          SizedBox(
+            width: 15,
+          ),
+          IconButton(
+            icon: const Icon(Icons.backspace_outlined),
+            color: Colors.grey,
+            tooltip: 'Delete score player',
+            onPressed: () {
+              setState(() {
+                label = 0;
+                restart();
+              });
+            },
+          )
         ],
       ),
     );

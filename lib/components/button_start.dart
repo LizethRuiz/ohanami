@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ohanami/constants.dart';
 
 class ButtonStart extends StatefulWidget {
   final String text;
@@ -28,7 +29,7 @@ class _ButtonStart extends State<ButtonStart> {
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(50.0),
                 gradient: const LinearGradient(
-                    colors: [Color(0xFFD288A9), Color(0xFFD288A9)],
+                    colors: [kBlueColor, kBlueColor],
                     begin: FractionalOffset(0.2, 0.0),
                     end: FractionalOffset(1.0, 0.6),
                     stops: [0.0, 0.6],

@@ -2,23 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:ohanami/components/backgroud.dart';
 import 'package:ohanami/components/button_start.dart';
 import 'package:ohanami/screens/add_players.dart';
-import 'package:ohanami/screens/scores.dart';
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key}) : super(key: key);
+class MyHomePage extends StatelessWidget {
+  const MyHomePage({
+    Key? key,
+  }) : super(key: key);
 
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Stack(
+        body: Background(
+            child: Stack(
       alignment: Alignment.center,
       children: <Widget>[
-        const Background(),
+        Positioned(
+          top: 0,
+          left: 0,
+          child: Image.asset(
+            "assets/images/ohanami.jpeg",
+            //width: size.width * 0.8,
+          ),
+        ),
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
           // ignore: prefer_const_literals_to_create_immutables
@@ -33,7 +37,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return const PlayersScreen();
+                      return PlayersScreen();
                     },
                   ),
                 );
@@ -48,7 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return const PlayersScreen();
+                      return PlayersScreen();
                     },
                   ),
                 );
@@ -59,6 +63,6 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         )
       ],
-    ));
+    )));
   }
 }

@@ -7,22 +7,22 @@ const int maximoCartasPR1 = 10;
 const int maximoCartasPR2 = 20;
 const int maximoCartasPR3 = 30;
 
-class PRonda1 {
+class CartasAPuntuarRonda1 {
   final Jugador jugador;
   final int cuantasAzules;
 
-  PRonda1({required this.jugador, required this.cuantasAzules}) {
+  CartasAPuntuarRonda1({required this.jugador, required this.cuantasAzules}) {
     if (cuantasAzules < ninguna) throw ProblemaAzulesNegativas();
     if (cuantasAzules > maximoCartasPR1) throw ProblemasDemasiadasAzules();
   }
 }
 
-class PRonda2 {
+class CartasAPuntuarRonda2 {
   final Jugador jugador;
   final int cuantasAzules;
   final int cuantasVerdes;
 
-  PRonda2(
+  CartasAPuntuarRonda2(
       {required this.jugador,
       required this.cuantasAzules,
       required this.cuantasVerdes}) {
@@ -31,14 +31,14 @@ class PRonda2 {
   }
 }
 
-class PRonda3 {
+class CartasAPuntuarRonda3 {
   final int cuantasVerdes;
   final int cuantasAzules;
   final int cuantasNegras;
   final int cuantasRosas;
   final Jugador jugador;
 
-  PRonda3(
+  CartasAPuntuarRonda3(
       {required this.jugador,
       required this.cuantasVerdes,
       required this.cuantasAzules,
