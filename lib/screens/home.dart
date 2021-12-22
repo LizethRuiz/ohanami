@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ohanami/components/backgroud.dart';
 import 'package:ohanami/components/button_start.dart';
 import 'package:ohanami/screens/add_players.dart';
+import 'package:ohanami/constants.dart';
 
 import 'list_games.dart';
 
@@ -21,8 +22,7 @@ class MyHomePage extends StatelessWidget {
           top: 0,
           left: 0,
           child: Image.asset(
-            "assets/images/ohanami.jpeg",
-            //width: size.width * 0.8,
+            kOhanami,
           ),
         ),
         Column(

@@ -14,6 +14,11 @@ const kBestSellerColor = Color(0xFFFFD073);
 const kGreenColor = Color(0xFF49CC96);
 const kShadowColor = Color(0xFFE6E6E6);
 
+//Links to images
+const kUxBig = "assets/images/ux_big.png";
+const kGame = "assets/images/game.png";
+const kOhanami = "assets/images/ohanami.jpeg";
+
 // My Text Styles
 const kHeadingextStyle = TextStyle(
   fontSize: 28,
