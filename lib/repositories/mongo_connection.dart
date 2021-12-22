@@ -8,13 +8,14 @@ import 'package:ohanami/screens/home.dart';
 
 class RepositorioMongo {
   late Db db;
+  // ignore: non_constant_identifier_names
+  String Enlace = "mongodb+srv://lizeth:micontra123@cluster0.lcjl8.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 
   Future<bool> inicializar() async {
     bool consultar = false;
     try {
       print("BUSCA CONECTAR A LA BD");
-      await Db.create(
-              "mongodb+srv://lizeth:micontra123@cluster0.lcjl8.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
+      await Db.create(Enlace)
           .then((value) => consultar = true);
     } on SocketException catch (_) {
       consultar = false;

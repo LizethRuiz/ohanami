@@ -3,6 +3,8 @@ import 'package:ohanami/components/backgroud.dart';
 import 'package:ohanami/components/button_start.dart';
 import 'package:ohanami/screens/add_players.dart';
 
+import 'list_games.dart';
+
 class MyHomePage extends StatelessWidget {
   const MyHomePage({
     Key? key,
@@ -37,7 +39,7 @@ class MyHomePage extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return PlayersScreen();
+                      return ListGameScreen();
                     },
                   ),
                 );
