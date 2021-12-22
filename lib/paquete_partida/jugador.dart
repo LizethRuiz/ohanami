@@ -17,4 +17,6 @@ class Jugador {
 
   @override
   int get hashCode => nombre.hashCode;
+
+  toMap() {}
 }

@@ -1,10 +1,17 @@
 import 'package:ohanami/components/button_start.dart';
 import 'package:ohanami/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:ohanami/models/players.dart';
+import 'package:ohanami/models/rounds.dart';
 import 'package:ohanami/paquete_partida/jugador.dart';
+import 'package:ohanami/paquete_partida/partida.dart';
 import 'package:ohanami/paquete_partida/puntuaciones.dart';
 import 'package:ohanami/repositories/mongo_connection.dart';
+import 'package:ohanami/screens/home.dart';
 import 'package:ohanami/screens/score.dart';
+import 'package:ohanami/screens/score2.dart';
+
+//enum FasePuntuacion { ronda1, ronda2, ronda3, desenlace }
 
 class Score3Screen extends StatefulWidget {
   final List<Jugador> jugadores;
@@ -23,11 +30,12 @@ class Score3Screen extends StatefulWidget {
 }
 
 class _Score3Screen extends State<Score3Screen> {
-  final List<Jugador> jugadores;
+  List<Jugador> jugadores;
   final List<CartasAPuntuarRonda1> puntuacionesRonda1;
   final List<CartasAPuntuarRonda2> puntuacionesRonda2;
   List<CartasAPuntuarRonda3> puntuacionesRonda3 = [];
   var conexion;
+  var newGame;
   bool connected = false;
 
   String prueba = '';
@@ -42,13 +50,13 @@ class _Score3Screen extends State<Score3Screen> {
       this.jugadores, this.puntuacionesRonda1, this.puntuacionesRonda2);
 
   void saveGame() async {
-    print("entraaa");
     RepositorioMongo conexion = RepositorioMongo();
-    /* connected = await conexion.inicializar();
+    connected = await conexion.inicializar();
+    print(connected);
     if (connected == true) {
-      await conexion.saveGame();
-    }*/
-    await conexion.saveGame();
+      print("SE CREO CONEXION CON LA BD");
+      //await conexion.saveGame();
+    }
   }
 
   void inicializaState() {
@@ -60,6 +68,74 @@ class _Score3Screen extends State<Score3Screen> {
         }
       });
     }
+  }
+
+  validaPartida() async {
+    List<Player> players = [];
+    List<Ronda> rondas = [];
+    Partida newGame = Partida(jugadores: jugadores.toSet());
+    for (int j = 0; j < jugadores.length; j++) {
+      players.add(Player(name: jugadores[j].nombre));
+    }
+    newGame.puntuacionRonda1(puntuacionesRonda1);
+    newGame.puntuacionRonda2(puntuacionesRonda2);
+    newGame.puntuacionRonda3(puntuacionesRonda3);
+    var puntuacionSumaRonda1 = newGame.puntuaciones(FasePuntuacion.ronda1);
+    var puntuacionSumaRonda2 = newGame.puntuaciones(FasePuntuacion.ronda2);
+    var puntuacionSumaRonda3 = newGame.puntuaciones(FasePuntuacion.ronda3);
+    var puntuacionSumaDesenlace =
+        newGame.puntuaciones(FasePuntuacion.desenlace);
+    for (int i = 0; i < puntuacionSumaRonda1.length; i++) {
+      rondas.add(Ronda(
+          num: 1,
+          azules: puntuacionSumaRonda1[i].porAzules,
+          verdes: 0,
+          negras: 0,
+          rosas: 0,
+          total: 0,
+          player: Player(name: puntuacionSumaRonda1[i].jugador.nombre)));
+    }
+    for (int i = 0; i < puntuacionSumaRonda2.length; i++) {
+      rondas.add(Ronda(
+          num: 2,
+          azules: puntuacionSumaRonda2[i].porAzules,
+          verdes: puntuacionSumaRonda2[i].porVerdes,
+          negras: 0,
+          rosas: 0,
+          total: 0,
+          player: Player(name: puntuacionSumaRonda2[i].jugador.nombre)));
+    }
+    for (int i = 0; i < puntuacionSumaRonda3.length; i++) {
+      rondas.add(Ronda(
+          num: 3,
+          azules: puntuacionSumaRonda3[i].porAzules,
+          verdes: puntuacionSumaRonda3[i].porVerdes,
+          negras: puntuacionSumaRonda3[i].porNegras,
+          rosas: puntuacionSumaRonda3[i].porRosas,
+          total: 0,
+          player: Player(name: puntuacionSumaRonda3[i].jugador.nombre)));
+    }
+    for (int i = 0; i < puntuacionSumaDesenlace.length; i++) {
+      rondas.add(Ronda(
+          num: 4,
+          azules: puntuacionSumaDesenlace[i].porAzules,
+          verdes: puntuacionSumaDesenlace[i].porVerdes,
+          negras: puntuacionSumaDesenlace[i].porNegras,
+          rosas: puntuacionSumaDesenlace[i].porRosas,
+          total: puntuacionSumaDesenlace[i].total,
+          player: Player(name: puntuacionSumaDesenlace[i].jugador.nombre)));
+    }
+    RepositorioMongo conexion = RepositorioMongo();
+    return await conexion.saveGame(players: players, rounds: rondas) == true
+        ? Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return MyHomePage();
+              },
+            ),
+          )
+        : print("no se guardo partida");
   }
 
   @override
@@ -128,6 +204,7 @@ class _Score3Screen extends State<Score3Screen> {
   Widget build(BuildContext context) {
     recordPlayers();
     RepositorioMongo newConnection;
+    Partida newGame;
     return Scaffold(
       body: Container(
         width: double.infinity,
@@ -214,7 +291,7 @@ class _Score3Screen extends State<Score3Screen> {
                           ElevatedButton(
                             onPressed: () => {
                               print("dio clic"),
-                              saveGame(),
+                              //saveGame(),
                               for (int i = 0;
                                   i < puntuacionesRonda2.length;
                                   i++)
@@ -226,6 +303,7 @@ class _Score3Screen extends State<Score3Screen> {
                                       cuantasNegras: cartasNegras[i],
                                       cuantasRosas: cartasRosas[i]))
                                 },
+                              validaPartida()
                             },
                             child: const Text("Siguiente"),
                             style: ElevatedButton.styleFrom(

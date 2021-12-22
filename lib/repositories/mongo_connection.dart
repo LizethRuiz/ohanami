@@ -4,6 +4,7 @@ import 'package:mongo_dart/mongo_dart.dart';
 import 'package:ohanami/models/games.dart';
 import 'package:ohanami/models/players.dart';
 import 'package:ohanami/models/rounds.dart';
+import 'package:ohanami/screens/home.dart';
 
 class RepositorioMongo {
   late Db db;
@@ -13,7 +14,7 @@ class RepositorioMongo {
     try {
       print("BUSCA CONECTAR A LA BD");
       await Db.create(
-              "mongodb+srv://lizeth:micontra123@cluster0.ipo6k.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
+              "mongodb+srv://lizeth:micontra123@cluster0.lcjl8.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
           .then((value) => consultar = true);
     } on SocketException catch (_) {
       consultar = false;
@@ -21,21 +22,17 @@ class RepositorioMongo {
     return consultar;
   }
 
+  List<Player> players = [];
+  List<Ronda> rounds = [];
+
   @override
-  Future<bool> saveGame() async {
+  Future<bool> saveGame({required players, required rounds}) async {
     print("BUSCA GUARDAR LA PARTIDA");
     db = await Db.create(
-        "mongodb+srv://lizeth:micontra123@cluster0.kzjpr.mongodb.net/myFirstDatabase?retryWrites=true&w=majority");
-    List<Player> players = [];
-    List<Ronda> rounds = [];
+        "mongodb+srv://lizeth:micontra123@cluster0.lcjl8.mongodb.net/myFirstDatabase?retryWrites=true&w=majority");
+
     await db.open();
     var col = db.collection('games');
-    Player lizeth = Player(name: "lizeth");
-    // ignore: unused_local_variable
-    Ronda ronda = Ronda(
-        num: 1, azules: 1, verdes: 1, negras: 1, rosas: 1, player: lizeth);
-    players.add(lizeth);
-    rounds.add(ronda);
     Game partida = Game(players: players, rounds: rounds);
     await col.insert(jsonDecode(partida.toJson()));
     return true;

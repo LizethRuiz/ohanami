@@ -135,25 +135,29 @@ class _Score1Screen extends State<Score1Screen> {
                       child: Row(
                         children: <Widget>[
                           ElevatedButton(
-                            onPressed: () => {
-                              for (int i = 0; i < jugadores.length; i++)
-                                {
-                                  print(jugadores[i].nombre),
+                            onPressed: () {
+                              try {
+                                for (int i = 0; i < jugadores.length; i++) {
+                                  print(jugadores[i].nombre);
                                   puntuacionesRonda1.add(CartasAPuntuarRonda1(
                                       jugador: jugadores[i],
-                                      cuantasAzules: suma[i]))
-                                },
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) {
-                                    return Score2Screen(
-                                      jugadores: jugadores,
-                                      puntuacionesRonda1: puntuacionesRonda1,
-                                    );
-                                  },
-                                ),
-                              ),
+                                      cuantasAzules: suma[i]));
+                                }
+
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) {
+                                      return Score2Screen(
+                                        jugadores: jugadores,
+                                        puntuacionesRonda1: puntuacionesRonda1,
+                                      );
+                                    },
+                                  ),
+                                );
+                              } on Exception catch (e) {
+                                print(e);
+                              }
                             },
                             child: const Text("Siguiente"),
                             style: ElevatedButton.styleFrom(

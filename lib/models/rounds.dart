@@ -8,6 +8,7 @@ class Ronda {
   final int verdes;
   final int negras;
   final int rosas;
+  final int total;
   final Player player;
 
   Ronda({
@@ -16,6 +17,7 @@ class Ronda {
     required this.verdes,
     required this.negras,
     required this.rosas,
+    required this.total,
     required this.player,
   });
 
@@ -25,6 +27,7 @@ class Ronda {
     int? verdes,
     int? negras,
     int? rosas,
+    int? total,
     Player? player,
   }) {
     return Ronda(
@@ -33,6 +36,7 @@ class Ronda {
       verdes: verdes ?? this.verdes,
       negras: negras ?? this.negras,
       rosas: rosas ?? this.rosas,
+      total: total ?? this.total,
       player: player ?? this.player,
     );
   }
@@ -44,6 +48,7 @@ class Ronda {
       'verdes': verdes,
       'negras': negras,
       'rosas': rosas,
+      'total': total,
       'player': player.toMap(),
     };
   }
@@ -55,6 +60,7 @@ class Ronda {
       verdes: map['verdes']?.toInt() ?? 0,
       negras: map['negras']?.toInt() ?? 0,
       rosas: map['rosas']?.toInt() ?? 0,
+      total: map['total']?.toInt() ?? 0,
       player: Player.fromMap(map['player']),
     );
   }
@@ -65,7 +71,7 @@ class Ronda {
 
   @override
   String toString() {
-    return 'Ronda(num: $num, azules: $azules, verdes: $verdes, negras: $negras, rosas: $rosas, player: $player)';
+    return 'Ronda(num: $num, azules: $azules, verdes: $verdes, negras: $negras, rosas: $rosas, total: $total, player: $player)';
   }
 
   @override
@@ -78,6 +84,7 @@ class Ronda {
         other.verdes == verdes &&
         other.negras == negras &&
         other.rosas == rosas &&
+        other.total == total &&
         other.player == player;
   }
 
@@ -88,6 +95,7 @@ class Ronda {
         verdes.hashCode ^
         negras.hashCode ^
         rosas.hashCode ^
+        total.hashCode ^
         player.hashCode;
   }
 }

@@ -90,25 +90,37 @@ class Partida {
         }
         return _puntuacionesJugador;
       case FasePuntuacion.desenlace:
-        // list<pjugador> r1 = puntuaciones(fase1);
-        // list<pjugador> r1 = puntuaciones(fase1);
-        // list<pjugador> r1 = puntuaciones(fase1);
-        // r1+r2+r3
+        List<PuntuacionJugador> r1 = puntuaciones(FasePuntuacion.ronda1);
+        List<PuntuacionJugador> r2 = puntuaciones(FasePuntuacion.ronda2);
+        List<PuntuacionJugador> r3 = puntuaciones(FasePuntuacion.ronda3);
+        int totalAzules = 0;
+        int totalVerdes = 0;
+        int totalNegras = 0;
+        int totalRosas = 0;
 
         for (Jugador j in jugadores) {
-          int total = puntuaciones(FasePuntuacion.ronda1)
-                  .firstWhere((element) => element.jugador == j)
-                  .total +
-              puntuaciones(FasePuntuacion.ronda2)
-                  .firstWhere((element) => element.jugador == j)
-                  .total +
-              puntuaciones(FasePuntuacion.ronda3)
-                  .firstWhere((element) => element.jugador == j)
-                  .total;
-          //PuntuacionJugador p = PuntuacionJugador(jugador: j, porAzules: porAzules, porVerdes: porVerdes, porRosas: porRosas, porNegras: porNegras)
+          var totalAzules = puntuaciones(FasePuntuacion.ronda3)
+              .firstWhere((element) => element.jugador == j)
+              .porAzules;
+          totalVerdes = puntuaciones(FasePuntuacion.ronda3)
+              .firstWhere((element) => element.jugador == j)
+              .porVerdes;
+          totalNegras = puntuaciones(FasePuntuacion.ronda3)
+              .firstWhere((element) => element.jugador == j)
+              .porNegras;
+          totalRosas = puntuaciones(FasePuntuacion.ronda3)
+              .firstWhere((element) => element.jugador == j)
+              .porRosas;
+
+          _puntuacionesJugador.add(PuntuacionJugador(
+              jugador: j,
+              porAzules: totalAzules,
+              porVerdes: totalVerdes,
+              porRosas: totalRosas,
+              porNegras: totalNegras));
         }
 
-        return [];
+        return _puntuacionesJugador;
     }
   }
 
@@ -170,8 +182,25 @@ class Partida {
   void puntuacionRonda3(List<CartasAPuntuarRonda3> puntuaciones) {
     if (_puntuacionesRonda2.isEmpty) throw ProblemaOrdenIncorrecto();
 
-    Set<Jugador> jugadoresR3 = puntuaciones.map((e) => e.jugador).toSet();
-    if (!setEquals(jugadores, jugadoresR3))
+    if (!setEquals(jugadores, puntuaciones.map((e) => e.jugador).toSet()))
       throw ProblemaJugadoresNoConcuerdan();
+
+    for (CartasAPuntuarRonda3 terceraPuntuacion in puntuaciones) {
+      CartasAPuntuarRonda2 segundaPuntuacion = _puntuacionesRonda2.firstWhere(
+          (element) => element.jugador == terceraPuntuacion.jugador);
+      if (segundaPuntuacion.cuantasAzules > terceraPuntuacion.cuantasAzules) {
+        throw ProblemaDisminucionAzules();
+      }
+      /*if(segundaPuntuacion.cuantasVerdes > terceraPuntuacion.cuantasVerdes) {
+        throw ProblemaDisminucionVerdes();
+      }*/
+    }
+
+    /*for(CartasAPuntuarRonda3 p in puntuaciones){
+      if(p.cuantasAzules > maximoCartasJugadasRonda3) throw ProblemaDemasiadosAzules();
+      if(p.cuantasVerdes > maximoCartasJugadasRonda3) throw ProblemaDemasiadosVerdes();
+    }*/
+
+    _puntuacionesRonda3 = puntuaciones;
   }
 }
