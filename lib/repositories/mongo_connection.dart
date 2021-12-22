@@ -8,14 +8,13 @@ import 'package:ohanami/screens/home.dart';
 
 class RepositorioMongo {
   late Db db;
+  String link = "mongodb+srv://lizeth:micontra123@cluster0.lcjl8.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 
   Future<bool> inicializar() async {
     bool consultar = false;
     try {
       print("BUSCA CONECTAR A LA BD");
-      await Db.create(
-              "mongodb+srv://lizeth:micontra123@cluster0.lcjl8.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
-          .then((value) => consultar = true);
+      await Db.create(link).then((value) => consultar = true);
     } on SocketException catch (_) {
       consultar = false;
     }
@@ -28,8 +27,7 @@ class RepositorioMongo {
   @override
   Future<bool> saveGame({required players, required rounds}) async {
     print("BUSCA GUARDAR LA PARTIDA");
-    db = await Db.create(
-        "mongodb+srv://lizeth:micontra123@cluster0.lcjl8.mongodb.net/myFirstDatabase?retryWrites=true&w=majority");
+    db = await Db.create(link);
 
     await db.open();
     var col = db.collection('games');
