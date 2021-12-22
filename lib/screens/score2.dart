@@ -1,4 +1,5 @@
 import 'package:ohanami/components/button_start.dart';
+import 'package:ohanami/components/best_seller_clipper.dart' as bsc;
 import 'package:ohanami/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:ohanami/paquete_partida/jugador.dart';
@@ -47,6 +48,7 @@ class _Score2Screen extends State<Score2Screen> {
 
   void recordPlayers() {
     _children = [];
+    final int cero = 0;
 
     for (var i = 0; i < puntuacionesRonda1.length; i++) {
       String playerName = puntuacionesRonda1[i].jugador.nombre;
@@ -59,7 +61,7 @@ class _Score2Screen extends State<Score2Screen> {
                 print(cartasAzules[i]),
                 setState(() {
                   prueba = playerName;
-                  cartasAzules[i] = cartasAzules[i] + 1;
+                  cartasAzules[i] = cartasAzules[i]++;
                 }),
                 print("prueba es $prueba"),
                 print("suma ahora es " + cartasAzules[i].toString()),
@@ -68,15 +70,15 @@ class _Score2Screen extends State<Score2Screen> {
           pressVerdes: () => {
                 setState(() {
                   prueba = jugadores[i].nombre;
-                  cartasVerdes[i] = cartasVerdes[i] + 1;
+                  cartasVerdes[i] = cartasVerdes[i]++;
                 }),
                 print("prueba es $prueba"),
                 print("suma ahora es " + cartasVerdes[i].toString())
               },
           restart: () => {
                 setState(() {
-                  cartasAzules[i] = 0;
-                  cartasVerdes[i] = 0;
+                  cartasAzules[i] = cero;
+                  cartasVerdes[i] = cero;
                 }),
               },
           labelAzul: cartasAzules[i],
@@ -93,7 +95,7 @@ class _Score2Screen extends State<Score2Screen> {
         decoration: BoxDecoration(
           color: Color(0xFFF5F4EF),
           image: DecorationImage(
-            image: AssetImage("assets/images/ux_big.png"),
+            image: AssetImage(kUxBig),
             alignment: Alignment.topRight,
           ),
         ),
@@ -106,13 +108,13 @@ class _Score2Screen extends State<Score2Screen> {
                 children: <Widget>[
                   SizedBox(height: 30),
                   ClipPath(
-                    clipper: BestSellerClipper(),
+                    clipper: bsc.BestSellerClipper(),
                     child: Container(
                       color: kBestSellerColor,
                       padding: EdgeInsets.only(
                           left: 10, top: 5, right: 20, bottom: 10),
                       child: Text(
-                        "Score".toUpperCase(),
+                        "SCORE",
                         style: TextStyle(
                           fontWeight: FontWeight.w600,
                         ),
@@ -124,9 +126,7 @@ class _Score2Screen extends State<Score2Screen> {
                   SizedBox(height: 20),
                   Row(
                     children: <Widget>[
-                      SizedBox(width: 10),
-                      SizedBox(width: 20),
-                      SizedBox(width: 10),
+                      SizedBox(width: 40),
                     ],
                   ),
                   SizedBox(height: 20),
@@ -307,7 +307,7 @@ class _ScoreJugadorState extends State<ScoreJugador> {
           ElevatedButton(
             onPressed: () => {
               setState(() {
-                labelAzul = labelAzul + 1;
+                labelAzul = labelAzul++;
                 pressAzules();
               }),
             },
@@ -321,7 +321,7 @@ class _ScoreJugadorState extends State<ScoreJugador> {
           ElevatedButton(
             onPressed: () => {
               setState(() {
-                labelVerde = labelVerde + 1;
+                labelVerde = labelVerde++;
                 pressVerdes();
               }),
             },
@@ -337,7 +337,7 @@ class _ScoreJugadorState extends State<ScoreJugador> {
           IconButton(
             icon: const Icon(Icons.backspace_outlined),
             color: Colors.grey,
-            tooltip: 'Delete score player',
+            tooltip: 'Borrar puntuaciones',
             onPressed: () {
               setState(() {
                 labelAzul = 0;
@@ -349,24 +349,5 @@ class _ScoreJugadorState extends State<ScoreJugador> {
         ],
       ),
     );
-  }
-}
-
-class BestSellerClipper extends CustomClipper<Path> {
-  @override
-  getClip(Size size) {
-    var path = Path();
-    path.lineTo(size.width - 20, 0);
-    path.lineTo(size.width, size.height / 2);
-    path.lineTo(size.width - 20, size.height);
-    path.lineTo(0, size.height);
-    path.lineTo(0, 0);
-    path.close();
-    return path;
-  }
-
-  @override
-  bool shouldReclip(CustomClipper oldClipper) {
-    return false;
   }
 }

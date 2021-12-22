@@ -196,10 +196,10 @@ class Partida {
       }*/
     }
 
-    for(CartasAPuntuarRonda3 p in puntuaciones){
+    /*for(CartasAPuntuarRonda3 p in puntuaciones){
       if(p.cuantasAzules > maximoCartasJugadasRonda3) throw ProblemaDemasiadosAzules();
       if(p.cuantasVerdes > maximoCartasJugadasRonda3) throw ProblemaDemasiadosVerdes();
-    }
+    }*/
 
     _puntuacionesRonda3 = puntuaciones;
   }

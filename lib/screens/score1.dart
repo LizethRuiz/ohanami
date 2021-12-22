@@ -1,4 +1,5 @@
 import 'package:ohanami/components/button_start.dart';
+import 'package:ohanami/components/best_seller_clipper.dart' as bsc;
 import 'package:ohanami/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:ohanami/paquete_partida/jugador.dart';
@@ -15,6 +16,7 @@ class Score1Screen extends StatefulWidget {
 }
 
 class _Score1Screen extends State<Score1Screen> {
+  final int cero = 0;
   final List<Jugador> jugadores;
   late List<CartasAPuntuarRonda1> puntuacionesRonda1 = [];
 
@@ -29,19 +31,19 @@ class _Score1Screen extends State<Score1Screen> {
 
     for (var i = 0; i < jugadores.length; i++) {
       _children.add(ScoreJugador(
-          number: i + 1,
+          number: i++,
           title: jugadores[i].nombre,
           press: () => {
                 setState(() {
                   prueba = jugadores[i].nombre;
-                  suma[i] = suma[i] + 1;
+                  suma[i] = suma[i]++;
                 }),
                 print("prueba es $prueba"),
                 print("suma ahora es " + suma[i].toString())
               },
           restart: () => {
                 setState(() {
-                  suma[i] = 0;
+                  suma[i] = cero;
                 }),
               },
           label: suma[i]));
@@ -57,7 +59,7 @@ class _Score1Screen extends State<Score1Screen> {
         decoration: BoxDecoration(
           color: Color(0xFFF5F4EF),
           image: DecorationImage(
-            image: AssetImage("assets/images/ux_big.png"),
+            image: AssetImage(kUxBig),
             alignment: Alignment.topRight,
           ),
         ),
@@ -70,13 +72,13 @@ class _Score1Screen extends State<Score1Screen> {
                 children: <Widget>[
                   SizedBox(height: 30),
                   ClipPath(
-                    clipper: BestSellerClipper(),
+                    clipper: bsc.BestSellerClipper(),
                     child: Container(
                       color: kBestSellerColor,
                       padding: EdgeInsets.only(
                           left: 10, top: 5, right: 20, bottom: 10),
                       child: Text(
-                        "Score".toUpperCase(),
+                        "SCORE",
                         style: TextStyle(
                           fontWeight: FontWeight.w600,
                         ),
@@ -88,9 +90,7 @@ class _Score1Screen extends State<Score1Screen> {
                   SizedBox(height: 20),
                   Row(
                     children: <Widget>[
-                      SizedBox(width: 10),
-                      SizedBox(width: 20),
-                      SizedBox(width: 10),
+                      SizedBox(width: 40),
                     ],
                   ),
                   SizedBox(height: 20),
@@ -269,7 +269,7 @@ class _ScoreJugadorState extends State<ScoreJugador> {
           IconButton(
             icon: const Icon(Icons.backspace_outlined),
             color: Colors.grey,
-            tooltip: 'Delete score player',
+            tooltip: 'Borrar puntuacion',
             onPressed: () {
               setState(() {
                 label = 0;
@@ -280,24 +280,5 @@ class _ScoreJugadorState extends State<ScoreJugador> {
         ],
       ),
     );
-  }
-}
-
-class BestSellerClipper extends CustomClipper<Path> {
-  @override
-  getClip(Size size) {
-    var path = Path();
-    path.lineTo(size.width - 20, 0);
-    path.lineTo(size.width, size.height / 2);
-    path.lineTo(size.width - 20, size.height);
-    path.lineTo(0, size.height);
-    path.lineTo(0, 0);
-    path.close();
-    return path;
-  }
-
-  @override
-  bool shouldReclip(CustomClipper oldClipper) {
-    return false;
   }
 }

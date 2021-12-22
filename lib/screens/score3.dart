@@ -1,4 +1,5 @@
 import 'package:ohanami/components/button_start.dart';
+import 'package:ohanami/components/best_seller_clipper.dart' as bsc;
 import 'package:ohanami/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:ohanami/models/players.dart';
@@ -10,8 +11,6 @@ import 'package:ohanami/repositories/mongo_connection.dart';
 import 'package:ohanami/screens/home.dart';
 import 'package:ohanami/screens/score.dart';
 import 'package:ohanami/screens/score2.dart';
-
-//enum FasePuntuacion { ronda1, ronda2, ronda3, desenlace }
 
 class Score3Screen extends StatefulWidget {
   final List<Jugador> jugadores;
@@ -211,7 +210,7 @@ class _Score3Screen extends State<Score3Screen> {
         decoration: BoxDecoration(
           color: Color(0xFFF5F4EF),
           image: DecorationImage(
-            image: AssetImage("assets/images/ux_big.png"),
+            image: AssetImage(kUxBig),
             alignment: Alignment.topRight,
           ),
         ),
@@ -224,13 +223,13 @@ class _Score3Screen extends State<Score3Screen> {
                 children: <Widget>[
                   SizedBox(height: 30),
                   ClipPath(
-                    clipper: BestSellerClipper(),
+                    clipper: bsc.BestSellerClipper(),
                     child: Container(
                       color: kBestSellerColor,
                       padding: EdgeInsets.only(
                           left: 10, top: 5, right: 20, bottom: 10),
                       child: Text(
-                        "Score".toUpperCase(),
+                        "SCORE",
                         style: TextStyle(
                           fontWeight: FontWeight.w600,
                         ),
@@ -242,9 +241,7 @@ class _Score3Screen extends State<Score3Screen> {
                   SizedBox(height: 20),
                   Row(
                     children: <Widget>[
-                      SizedBox(width: 10),
-                      SizedBox(width: 20),
-                      SizedBox(width: 10),
+                      SizedBox(width: 40),
                     ],
                   ),
                   SizedBox(height: 20),
@@ -439,7 +436,7 @@ class _ScoreJugadorState extends State<ScoreJugador> {
           FloatingActionButton.extended(
               onPressed: () => {
                     setState(() {
-                      labelAzul = labelAzul + 1;
+                      labelAzul = labelAzul++;
                       pressAzules();
                     }),
                   },
@@ -450,7 +447,7 @@ class _ScoreJugadorState extends State<ScoreJugador> {
           FloatingActionButton.extended(
               onPressed: () => {
                     setState(() {
-                      labelVerde = labelVerde + 1;
+                      labelVerde = labelVerde++;
                       pressVerdes();
                     }),
                   },
@@ -460,7 +457,7 @@ class _ScoreJugadorState extends State<ScoreJugador> {
           FloatingActionButton.extended(
               onPressed: () => {
                     setState(() {
-                      labelNegras = labelNegras + 1;
+                      labelNegras = labelNegras++;
                       pressNegras();
                     }),
                   },
@@ -470,7 +467,7 @@ class _ScoreJugadorState extends State<ScoreJugador> {
           FloatingActionButton.extended(
               onPressed: () => {
                     setState(() {
-                      labelRosas = labelRosas + 1;
+                      labelRosas = labelRosas++;
                       pressRosas();
                     }),
                   },
@@ -481,7 +478,7 @@ class _ScoreJugadorState extends State<ScoreJugador> {
           IconButton(
             icon: const Icon(Icons.backspace_outlined),
             color: Colors.grey,
-            tooltip: 'Delete score player',
+            tooltip: 'Borrar puntuaciones',
             onPressed: () {
               setState(() {
                 labelAzul = 0;
@@ -495,24 +492,5 @@ class _ScoreJugadorState extends State<ScoreJugador> {
         ],
       ),
     );
-  }
-}
-
-class BestSellerClipper extends CustomClipper<Path> {
-  @override
-  getClip(Size size) {
-    var path = Path();
-    path.lineTo(size.width - 20, 0);
-    path.lineTo(size.width, size.height / 2);
-    path.lineTo(size.width - 20, size.height);
-    path.lineTo(0, size.height);
-    path.lineTo(0, 0);
-    path.close();
-    return path;
-  }
-
-  @override
-  bool shouldReclip(CustomClipper oldClipper) {
-    return false;
   }
 }
