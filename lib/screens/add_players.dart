@@ -31,9 +31,10 @@ class _PlayersScreenState extends State<PlayersScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             //SizedBox(height: 200),
-            SvgPicture.asset(
-              "assets/icons/signup.svg",
-              height: 200,
+            Image.asset(
+              "assets/images/jugadores.jpeg",
+              width: 300,
+              height: 250,
             ),
             RoundedInputField(
               hintText: "Jugador 1",

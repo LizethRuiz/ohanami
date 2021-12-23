@@ -10,7 +10,8 @@ const kBackgroundColor = Color(0xFFF9F8FD);
 // Colors
 const kTextColor = Color(0xFF0D1333);
 const kBlueColor = Color(0xFF6E8AFA);
-const kBestSellerColor = Color(0xFFFFD073);
+const pPurpleColor = Color(0xFF536DFE);
+const kBestSellerColor = Color(0xFFB39DDB);
 const kGreenColor = Color(0xFF49CC96);
 const kShadowColor = Color(0xFFE6E6E6);
 
