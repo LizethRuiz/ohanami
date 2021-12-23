@@ -4,6 +4,7 @@ import 'package:ohanami/paquete_partida/jugador.dart';
 import 'package:ohanami/paquete_partida/puntuaciones.dart';
 import 'package:ohanami/screens/score1.dart';
 import 'package:ohanami/components/best_seller_clipper.dart' as bsc;
+import 'package:ohanami/components/kClipPath.dart';
 
 import '../constants.dart';
 
@@ -31,13 +32,7 @@ class _ScoreState extends State<Score> {
     return Scaffold(
       body: Container(
         width: double.infinity,
-        decoration: BoxDecoration(
-          color: Color(0xFFF5F4EF),
-          image: DecorationImage(
-            image: AssetImage(kUxBig),
-            alignment: Alignment.topRight,
-          ),
-        ),
+        decoration: kBoxDecoration,
         child: Column(
           children: <Widget>[
             Padding(
@@ -46,28 +41,11 @@ class _ScoreState extends State<Score> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   SizedBox(height: 30),
-                  ClipPath(
-                    clipper: bsc.BestSellerClipper(),
-                    child: Container(
-                      color: kBestSellerColor,
-                      padding: EdgeInsets.only(
-                          left: 10, top: 5, right: 20, bottom: 10),
-                      child: Text(
-                        "SCORE",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                  ),
+                  kClipPath(),
                   SizedBox(height: 16),
                   Text("Ronda 1", style: kHeadingextStyle),
                   SizedBox(height: 20),
-                  Row(
-                    children: <Widget>[
-                      SizedBox(width: 40),
-                    ],
-                  ),
+                  SizedBox(width: 40),
                   SizedBox(height: 20),
                 ],
               ),

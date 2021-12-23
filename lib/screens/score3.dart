@@ -1,5 +1,6 @@
 import 'package:ohanami/components/button_start.dart';
 import 'package:ohanami/components/best_seller_clipper.dart' as bsc;
+import 'package:ohanami/components/kClipPath.dart';
 import 'package:ohanami/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:ohanami/models/players.dart';
@@ -208,13 +209,7 @@ class _Score3Screen extends State<Score3Screen> {
     return Scaffold(
       body: Container(
         width: double.infinity,
-        decoration: BoxDecoration(
-          color: Color(0xFFF5F4EF),
-          image: DecorationImage(
-            image: AssetImage(kUxBig),
-            alignment: Alignment.topRight,
-          ),
-        ),
+        decoration: kBoxDecoration,
         child: Column(
           children: <Widget>[
             Padding(
@@ -223,28 +218,11 @@ class _Score3Screen extends State<Score3Screen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   SizedBox(height: 30),
-                  ClipPath(
-                    clipper: bsc.BestSellerClipper(),
-                    child: Container(
-                      color: kBestSellerColor,
-                      padding: EdgeInsets.only(
-                          left: 10, top: 5, right: 20, bottom: 10),
-                      child: Text(
-                        "SCORE",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                  ),
+                  kClipPath(),
                   SizedBox(height: 16),
                   Text("Ronda 3", style: kHeadingextStyle),
                   SizedBox(height: 20),
-                  Row(
-                    children: <Widget>[
-                      SizedBox(width: 40),
-                    ],
-                  ),
+                  SizedBox(width: 40),
                   SizedBox(height: 20),
                 ],
               ),

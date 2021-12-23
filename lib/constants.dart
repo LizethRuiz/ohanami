@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ohanami/components/best_seller_clipper.dart' as bsc;
 
 // Colors that we use in our app
 const kPrimaryColor = Color(0xFFCFD8DC);
@@ -42,4 +43,12 @@ const kSubtitleTextSyule = TextStyle(
   fontSize: 18,
   color: kTextColor,
   // fontWeight: FontWeight.bold,
+);
+
+const kBoxDecoration = BoxDecoration(
+  color: Color(0xFFF5F4EF),
+  image: DecorationImage(
+    image: AssetImage(kUxBig),
+    alignment: Alignment.topRight,
+  ),
 );
