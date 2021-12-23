@@ -9,6 +9,7 @@ import 'package:ohanami/paquete_partida/partida.dart';
 import 'package:ohanami/paquete_partida/puntuaciones.dart';
 import 'package:ohanami/repositories/mongo_connection.dart';
 import 'package:ohanami/screens/home.dart';
+import 'package:ohanami/screens/list_games.dart';
 import 'package:ohanami/screens/score.dart';
 import 'package:ohanami/screens/score2.dart';
 
@@ -130,7 +131,7 @@ class _Score3Screen extends State<Score3Screen> {
             context,
             MaterialPageRoute(
               builder: (context) {
-                return MyHomePage();
+                return ListGameScreen();
               },
             ),
           )
