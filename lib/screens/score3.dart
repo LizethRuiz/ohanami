@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:ohanami/components/button_start.dart';
 import 'package:ohanami/components/best_seller_clipper.dart' as bsc;
 import 'package:ohanami/constants.dart';
@@ -125,8 +126,12 @@ class _Score3Screen extends State<Score3Screen> {
           total: puntuacionSumaDesenlace[i].total,
           player: Player(name: puntuacionSumaDesenlace[i].jugador.nombre)));
     }
+    final now = new DateTime.now();
+    String formatter = DateFormat('yMd').format(now);
     RepositorioMongo conexion = RepositorioMongo();
-    return await conexion.saveGame(players: players, rounds: rondas) == true
+    return await conexion.saveGame(
+                players: players, rounds: rondas, date: formatter.toString()) ==
+            true
         ? Navigator.push(
             context,
             MaterialPageRoute(

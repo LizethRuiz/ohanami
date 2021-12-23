@@ -9,19 +9,23 @@ import 'package:ohanami/models/rounds.dart';
 class Game {
   final List<Player> players;
   final List<Ronda> rounds;
+  final String date;
 
   Game({
     required this.players,
     required this.rounds,
+    required this.date,
   });
 
   Game copyWith({
     List<Player>? players,
     List<Ronda>? rounds,
+    String? date,
   }) {
     return Game(
       players: players ?? this.players,
       rounds: rounds ?? this.rounds,
+      date: date ?? this.date,
     );
   }
 
@@ -29,6 +33,7 @@ class Game {
     return {
       'players': players.map((x) => x.toMap()).toList(),
       'rounds': rounds.map((x) => x.toMap()).toList(),
+      'date': date,
     };
   }
 
@@ -36,6 +41,7 @@ class Game {
     return Game(
       players: List<Player>.from(map['players']?.map((x) => Player.fromMap(x))),
       rounds: List<Ronda>.from(map['rounds']?.map((x) => Ronda.fromMap(x))),
+      date: map['date'] ?? '',
     );
   }
 
@@ -44,7 +50,7 @@ class Game {
   factory Game.fromJson(String source) => Game.fromMap(json.decode(source));
 
   @override
-  String toString() => 'Game(players: $players, rounds: $rounds)';
+  String toString() => 'Game(players: $players, rounds: $rounds, date: $date)';
 
   @override
   bool operator ==(Object other) {
@@ -52,9 +58,10 @@ class Game {
 
     return other is Game &&
         listEquals(other.players, players) &&
-        listEquals(other.rounds, rounds);
+        listEquals(other.rounds, rounds) &&
+        other.date == date;
   }
 
   @override
-  int get hashCode => players.hashCode ^ rounds.hashCode;
+  int get hashCode => players.hashCode ^ rounds.hashCode ^ date.hashCode;
 }
