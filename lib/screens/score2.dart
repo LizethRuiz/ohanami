@@ -33,6 +33,8 @@ class _Score2Screen extends State<Score2Screen> {
 
   void inicializaState() {
     for (var i = 0; i < puntuacionesRonda1.length; i++) {
+      print("inicializa el estado");
+      print(puntuacionesRonda1[i].cuantasAzules);
       setState(() {
         cartasAzules[i] = puntuacionesRonda1[i].cuantasAzules;
       });
@@ -61,7 +63,7 @@ class _Score2Screen extends State<Score2Screen> {
                 print(cartasAzules[i]),
                 setState(() {
                   prueba = playerName;
-                  cartasAzules[i] = cartasAzules[i]++;
+                  cartasAzules[i] = cartasAzules[i] + 1;
                 }),
                 print("prueba es $prueba"),
                 print("suma ahora es " + cartasAzules[i].toString()),
@@ -70,7 +72,7 @@ class _Score2Screen extends State<Score2Screen> {
           pressVerdes: () => {
                 setState(() {
                   prueba = jugadores[i].nombre;
-                  cartasVerdes[i] = cartasVerdes[i]++;
+                  cartasVerdes[i] = cartasVerdes[i] + 1;
                 }),
                 print("prueba es $prueba"),
                 print("suma ahora es " + cartasVerdes[i].toString())
@@ -307,7 +309,7 @@ class _ScoreJugadorState extends State<ScoreJugador> {
           ElevatedButton(
             onPressed: () => {
               setState(() {
-                labelAzul = labelAzul++;
+                labelAzul = labelAzul + 1;
                 pressAzules();
               }),
             },
@@ -321,7 +323,7 @@ class _ScoreJugadorState extends State<ScoreJugador> {
           ElevatedButton(
             onPressed: () => {
               setState(() {
-                labelVerde = labelVerde++;
+                labelVerde = labelVerde + 1;
                 pressVerdes();
               }),
             },

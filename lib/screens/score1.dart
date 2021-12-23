@@ -27,16 +27,18 @@ class _Score1Screen extends State<Score1Screen> {
   _Score1Screen(this.jugadores);
 
   void recordPlayers() {
+    print(jugadores);
     _children = [];
 
     for (var i = 0; i < jugadores.length; i++) {
+      print("entra");
       _children.add(ScoreJugador(
-          number: i++,
+          number: i + 1,
           title: jugadores[i].nombre,
           press: () => {
                 setState(() {
                   prueba = jugadores[i].nombre;
-                  suma[i] = suma[i]++;
+                  suma[i] = suma[i] + 1;
                 }),
                 print("prueba es $prueba"),
                 print("suma ahora es " + suma[i].toString())

@@ -436,7 +436,7 @@ class _ScoreJugadorState extends State<ScoreJugador> {
           FloatingActionButton.extended(
               onPressed: () => {
                     setState(() {
-                      labelAzul = labelAzul++;
+                      labelAzul = labelAzul + 1;
                       pressAzules();
                     }),
                   },
@@ -447,7 +447,7 @@ class _ScoreJugadorState extends State<ScoreJugador> {
           FloatingActionButton.extended(
               onPressed: () => {
                     setState(() {
-                      labelVerde = labelVerde++;
+                      labelVerde = labelVerde + 1;
                       pressVerdes();
                     }),
                   },
@@ -457,7 +457,7 @@ class _ScoreJugadorState extends State<ScoreJugador> {
           FloatingActionButton.extended(
               onPressed: () => {
                     setState(() {
-                      labelNegras = labelNegras++;
+                      labelNegras = labelNegras + 1;
                       pressNegras();
                     }),
                   },
@@ -467,7 +467,7 @@ class _ScoreJugadorState extends State<ScoreJugador> {
           FloatingActionButton.extended(
               onPressed: () => {
                     setState(() {
-                      labelRosas = labelRosas++;
+                      labelRosas = labelRosas + 1;
                       pressRosas();
                     }),
                   },
