@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:ohanami/constants.dart';
 import 'package:ohanami/repositories/mongo_connection.dart';
+import 'package:ohanami/screens/players_summary.dart';
 
 class ListGameScreen extends StatefulWidget {
   @override
@@ -21,6 +22,7 @@ class _ListGameScreenState extends State<ListGameScreen> {
         var puntosGanador = 0;
         var jugadorGanador = '';
         var rondas = allGames[i]['rounds'];
+        var fecha = allGames[i]['date'];
         for (var j = 0; j < rondas.length; j++) {
           if (rondas[j]['num'] == 4 && rondas[j]['total'] > puntosGanador) {
             puntosGanador = rondas[j]['total'];
@@ -60,18 +62,27 @@ class _ListGameScreenState extends State<ListGameScreen> {
                       "$jugadorGanador",
                       style: Theme.of(context).textTheme.subtitle2,
                     ),
-                    Text("Alcanzo los $puntosGanador puntos")
+                    Text("Alcanzo los $puntosGanador puntos"),
+                    Text("$fecha")
                   ],
                 ),
               ),
               Padding(
-                padding: EdgeInsets.all(10),
-                child: SvgPicture.asset(
-                  "assets/icons/star.svg",
-                  height: 30,
-                  width: 30,
-                ),
-              ),
+                  padding: EdgeInsets.all(10),
+                  child: IconButton(
+                    icon: const Icon(Icons.arrow_forward),
+                    color: Colors.pink,
+                    tooltip: 'Siguiente',
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              PlayersSummaryScreen(gameId: allGames[i]['uuid']),
+                        ),
+                      );
+                    },
+                  )),
             ],
           ),
         ));

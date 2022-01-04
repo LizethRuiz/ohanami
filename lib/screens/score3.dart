@@ -13,6 +13,7 @@ import 'package:ohanami/screens/home.dart';
 import 'package:ohanami/screens/list_games.dart';
 import 'package:ohanami/screens/score.dart';
 import 'package:ohanami/screens/score2.dart';
+import 'package:uuid/uuid.dart';
 
 class Score3Screen extends StatefulWidget {
   final List<Jugador> jugadores;
@@ -72,6 +73,7 @@ class _Score3Screen extends State<Score3Screen> {
   }
 
   validaPartida() async {
+    var uuid = Uuid();
     List<Player> players = [];
     List<Ronda> rondas = [];
     Partida newGame = Partida(jugadores: jugadores.toSet());
@@ -130,7 +132,10 @@ class _Score3Screen extends State<Score3Screen> {
     String formatter = DateFormat('yMd').format(now);
     RepositorioMongo conexion = RepositorioMongo();
     return await conexion.saveGame(
-                players: players, rounds: rondas, date: formatter.toString()) ==
+                players: players,
+                rounds: rondas,
+                date: formatter.toString(),
+                uuid: uuid.v1()) ==
             true
         ? Navigator.push(
             context,
@@ -293,7 +298,6 @@ class _Score3Screen extends State<Score3Screen> {
                         children: <Widget>[
                           ElevatedButton(
                             onPressed: () => {
-                              print("dio clic"),
                               //saveGame(),
                               for (int i = 0;
                                   i < puntuacionesRonda2.length;

@@ -38,6 +38,8 @@ dependencies:
   mongo_dart: ^0.7.4
   flutter_svg: ^1.0.0
   intl: ^0.17.0
+  objectid: ^2.0.0
+  uuid: ^3.0.5
 
 dev_dependencies:
   flutter_test:

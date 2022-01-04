@@ -10,22 +10,26 @@ class Game {
   final List<Player> players;
   final List<Ronda> rounds;
   final String date;
+  final String uuid;
 
   Game({
     required this.players,
     required this.rounds,
     required this.date,
+    required this.uuid,
   });
 
   Game copyWith({
     List<Player>? players,
     List<Ronda>? rounds,
     String? date,
+    String? uuid,
   }) {
     return Game(
       players: players ?? this.players,
       rounds: rounds ?? this.rounds,
       date: date ?? this.date,
+      uuid: uuid ?? this.uuid,
     );
   }
 
@@ -34,6 +38,7 @@ class Game {
       'players': players.map((x) => x.toMap()).toList(),
       'rounds': rounds.map((x) => x.toMap()).toList(),
       'date': date,
+      'uuid': uuid,
     };
   }
 
@@ -42,6 +47,7 @@ class Game {
       players: List<Player>.from(map['players']?.map((x) => Player.fromMap(x))),
       rounds: List<Ronda>.from(map['rounds']?.map((x) => Ronda.fromMap(x))),
       date: map['date'] ?? '',
+      uuid: map['uuid'] ?? '',
     );
   }
 
@@ -50,7 +56,9 @@ class Game {
   factory Game.fromJson(String source) => Game.fromMap(json.decode(source));
 
   @override
-  String toString() => 'Game(players: $players, rounds: $rounds, date: $date)';
+  String toString() {
+    return 'Game(players: $players, rounds: $rounds, date: $date, uuid: $uuid)';
+  }
 
   @override
   bool operator ==(Object other) {
@@ -59,9 +67,12 @@ class Game {
     return other is Game &&
         listEquals(other.players, players) &&
         listEquals(other.rounds, rounds) &&
-        other.date == date;
+        other.date == date &&
+        other.uuid == uuid;
   }
 
   @override
-  int get hashCode => players.hashCode ^ rounds.hashCode ^ date.hashCode;
+  int get hashCode {
+    return players.hashCode ^ rounds.hashCode ^ date.hashCode ^ uuid.hashCode;
+  }
 }
